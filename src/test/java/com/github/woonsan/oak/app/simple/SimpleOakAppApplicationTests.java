@@ -1,4 +1,4 @@
-package com.github.woonsan;
+package com.github.woonsan.oak.app.simple;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.github.woonsan;
+package com.github.woonsan.oak.app.simple;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
