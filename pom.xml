@@ -65,6 +65,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.jackrabbit</groupId>
+      <artifactId>oak-http</artifactId>
+      <version>${jackrabbit-oak.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>javax.jcr</groupId>
       <artifactId>jcr</artifactId>
       <version>${javax.jcr.version}</version>

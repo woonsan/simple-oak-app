@@ -20,9 +20,12 @@ import javax.annotation.PreDestroy;
 import javax.jcr.Repository;
 
 import org.apache.jackrabbit.oak.Oak;
+import org.apache.jackrabbit.oak.api.ContentRepository;
+import org.apache.jackrabbit.oak.http.OakServlet;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,19 +34,45 @@ public class SimpleOakAppConfiguration {
 
     private static Logger log = LoggerFactory.getLogger(SimpleOakAppConfiguration.class);
 
-    private Repository repository;
+    private ContentRepository contentRepository;
+    private volatile Repository repository;
+
+    @Bean
+    public ServletRegistrationBean<OakServlet> httpBindingServletRegistrationBean() {
+        checkRepositoryInitialized();
+        return new ServletRegistrationBean(new OakServlet(contentRepository), "/*");
+    }
 
     @Bean
     public Repository repository() {
-        if (repository == null) {
-            repository = new Jcr(new Oak()).createRepository();
-        }
-
+        checkRepositoryInitialized();
         return repository;
     }
 
     @PreDestroy
     public void destroy() {
         log.info("TODO: shutdown the repository and its store object(s)...");
+    }
+
+    private void checkRepositoryInitialized() {
+        Repository repo = repository;
+
+        if (repo == null) {
+            synchronized (this) {
+                repo = repository;
+
+                if (repo == null) {
+                    repo = new Jcr(new Oak() {
+                        @Override
+                        public ContentRepository createContentRepository() {
+                            contentRepository = super.createContentRepository();
+                            return contentRepository;
+                        }
+                    }).createRepository();
+
+                    repository = repo;
+                }
+            }
+        }
     }
 }
