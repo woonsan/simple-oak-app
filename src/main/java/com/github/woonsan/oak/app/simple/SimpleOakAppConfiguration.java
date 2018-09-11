@@ -21,8 +21,10 @@ import javax.jcr.Repository;
 
 import org.apache.jackrabbit.oak.Oak;
 import org.apache.jackrabbit.oak.jcr.Jcr;
+import org.apache.jackrabbit.server.remoting.davex.JcrRemotingServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +34,17 @@ public class SimpleOakAppConfiguration {
     private static Logger log = LoggerFactory.getLogger(SimpleOakAppConfiguration.class);
 
     private volatile Repository repository;
+
+    @SuppressWarnings("serial")
+    @Bean
+    public ServletRegistrationBean<JcrRemotingServlet> httpBindingServletRegistrationBean() {
+        return new ServletRegistrationBean<JcrRemotingServlet>(new JcrRemotingServlet() {
+            @Override
+            protected Repository getRepository() {
+                return repository();
+            }
+        }, "/*");
+    }
 
     @Bean
     public Repository repository() {
