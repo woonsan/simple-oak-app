@@ -1,9 +1,15 @@
 # simple-oak-app
 
-Simple Jackrabbit OAK based application which simply exposes the
-[OAK Http binding](https://github.com/woonsan/jackrabbit-oak/tree/trunk/oak-http) servlet at the root path.
-i.e. http://localhost:8080/
+Simple Jackrabbit OAK based application for my own learning / testing.
 
 ## How to run
 
     $ mvn spring-boot:run
+
+## How to test
+
+    $ curl -v http://localhost:8080/greeting/
+    
+    $ curl -v --data "message=Hello+World" http://localhost:8080/greeting/
+    
+
