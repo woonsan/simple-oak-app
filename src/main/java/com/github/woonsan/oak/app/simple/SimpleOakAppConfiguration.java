@@ -19,6 +19,7 @@ package com.github.woonsan.oak.app.simple;
 import javax.annotation.PreDestroy;
 import javax.jcr.Repository;
 
+import org.apache.jackrabbit.api.JackrabbitRepository;
 import org.apache.jackrabbit.oak.Oak;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.apache.jackrabbit.server.remoting.davex.JcrRemotingServlet;
@@ -56,7 +57,6 @@ public class SimpleOakAppConfiguration {
 
                 if (repo == null) {
                     repo = new Jcr(new Oak()).createRepository();
-
                     repository = repo;
                 }
             }
@@ -67,6 +67,8 @@ public class SimpleOakAppConfiguration {
 
     @PreDestroy
     public void destroy() {
-        log.info("TODO: shutdown the repository and its store object(s)...");
+        if (repository instanceof JackrabbitRepository) {
+            ((JackrabbitRepository) repository).shutdown();
+        }
     }
 }

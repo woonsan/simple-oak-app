@@ -6,10 +6,10 @@ Simple Jackrabbit OAK based application for my own learning / testing.
 
     $ mvn spring-boot:run
 
+which exposes [JCR Webdav Server](http://jackrabbit.apache.org/jcr/components/jackrabbit-jcr-server.html#JCR_Webdav_Server) at http://localhost:8080/.
+
 ## How to test
 
-    $ curl -v http://localhost:8080/greeting/
-    
-    $ curl -v --data "message=Hello+World" http://localhost:8080/greeting/
-    
+    $ curl -v --user admin:admin http://localhost:8080/default/
+    $ curl -v --user admin:admin http://localhost:8080/default/jcr:root/
 

@@ -16,11 +16,8 @@
  */
 package com.github.woonsan.oak.app.simple;
 
-import javax.jcr.Repository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -28,9 +25,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SimpleOakAppApplication {
 
     private static Logger log = LoggerFactory.getLogger(SimpleOakAppApplication.class);
-
-    @Autowired
-    private Repository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(SimpleOakAppApplication.class, args);
