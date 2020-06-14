@@ -49,20 +49,9 @@ public class SimpleOakAppConfiguration {
 
     @Bean
     public Repository repository() {
-        Repository repo = repository;
-
-        if (repo == null) {
-            synchronized (this) {
-                repo = repository;
-
-                if (repo == null) {
-                    repo = new Jcr(new Oak()).createRepository();
-                    repository = repo;
-                }
-            }
-        }
-
-        return repo;
+        repository = new Jcr(new Oak()).createRepository();
+        log.info("Reository creaetd: {}", repository);
+        return repository;
     }
 
     @PreDestroy
