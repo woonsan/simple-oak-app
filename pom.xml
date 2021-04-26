@@ -45,7 +45,7 @@
     <jackrabbit.version>2.20.1</jackrabbit.version>
     <jackrabbit-oak.version>1.30.0</jackrabbit-oak.version>
 
-    <commons-io.version>2.6</commons-io.version>
+    <commons-io.version>2.7</commons-io.version>
 
   </properties>
 
